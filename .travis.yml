@@ -1,6 +1,12 @@
 language: c
 compiler: gcc
-script: gcc editor.c -o editor && make
+script: 
+  - gcc --coverage editor.c -o editor
+  - make
+  - ./editor tester.cpp
+  - gcov editor.c
 branches:
   only: 
-    - master
+    - add-coverage
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
